@@ -1,0 +1,11 @@
+/home/artur/Dev/Rust/citro-2d/citro-2d-sys/target/debug/deps/doxygen_rs-e019e6bdaab43fc6.d: /home/artur/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/doxygen-rs-0.4.2/src/lib.rs /home/artur/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/doxygen-rs-0.4.2/src/emojis.rs /home/artur/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/doxygen-rs-0.4.2/src/generator.rs /home/artur/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/doxygen-rs-0.4.2/src/lexer.rs /home/artur/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/doxygen-rs-0.4.2/src/parser.rs
+
+/home/artur/Dev/Rust/citro-2d/citro-2d-sys/target/debug/deps/libdoxygen_rs-e019e6bdaab43fc6.rlib: /home/artur/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/doxygen-rs-0.4.2/src/lib.rs /home/artur/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/doxygen-rs-0.4.2/src/emojis.rs /home/artur/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/doxygen-rs-0.4.2/src/generator.rs /home/artur/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/doxygen-rs-0.4.2/src/lexer.rs /home/artur/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/doxygen-rs-0.4.2/src/parser.rs
+
+/home/artur/Dev/Rust/citro-2d/citro-2d-sys/target/debug/deps/libdoxygen_rs-e019e6bdaab43fc6.rmeta: /home/artur/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/doxygen-rs-0.4.2/src/lib.rs /home/artur/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/doxygen-rs-0.4.2/src/emojis.rs /home/artur/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/doxygen-rs-0.4.2/src/generator.rs /home/artur/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/doxygen-rs-0.4.2/src/lexer.rs /home/artur/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/doxygen-rs-0.4.2/src/parser.rs
+
+/home/artur/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/doxygen-rs-0.4.2/src/lib.rs:
+/home/artur/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/doxygen-rs-0.4.2/src/emojis.rs:
+/home/artur/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/doxygen-rs-0.4.2/src/generator.rs:
+/home/artur/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/doxygen-rs-0.4.2/src/lexer.rs:
+/home/artur/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/doxygen-rs-0.4.2/src/parser.rs:

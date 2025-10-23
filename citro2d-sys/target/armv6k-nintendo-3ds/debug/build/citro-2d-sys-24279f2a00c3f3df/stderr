@@ -1,0 +1,1 @@
+clang diag: /opt/devkitpro/libctru/include/c3d/renderqueue.h:45:15: warning: size of field '__e' (8 bits) does not match the size of the first field in transparent union; transparent_union attribute ignored [-Wignored-attributes]

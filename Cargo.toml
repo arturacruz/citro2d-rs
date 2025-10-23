@@ -1,0 +1,10 @@
+[workspace]
+members = [
+    "citro2d",
+    "citro2d-sys",
+]
+default-members = [
+    "citro2d",
+    "citro2d-sys",
+]
+resolver = "2"
