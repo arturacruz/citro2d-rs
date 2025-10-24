@@ -1,6 +1,6 @@
 use citro2d_sys::{C2D_Flush, C2D_SceneSize, C2D_SceneTarget, C2D_TargetClear, C3D_FrameBegin, C3D_FrameEnd, C3D_FRAME_SYNCDRAW};
 
-use crate::{base::Citro2D, color::Color, render::Target};
+use crate::{base::Citro2D, render::Target};
 
 // TODO: Put ALL drawing functions in the frame struct to enforce starting the frame in order to
 // draw.

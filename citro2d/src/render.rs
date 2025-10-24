@@ -1,6 +1,6 @@
-use citro2d_sys::{C2D_CreateScreenTarget, C2D_SceneTarget, C3D_RenderTarget};
+use citro2d_sys::{C2D_CreateScreenTarget, C3D_RenderTarget};
 
-use crate::base::Citro2D;
+use crate::{base::Citro2D};
 
 #[doc(alias = "C3D_RenderTarget")]
 pub struct Target {

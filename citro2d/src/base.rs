@@ -1,6 +1,4 @@
-use citro2d_sys::{C2D_BotLeft, C2D_BotRight, C2D_Fini, C2D_Flush, C2D_Init, C2D_Prepare, C2D_SceneSize, C2D_TintLuma, C2D_TintMult, C2D_TintSolid, C2D_TopLeft, C2D_TopRight, C3D_Fini, C3D_Init, C2D_DEFAULT_MAX_OBJECTS, C3D_DEFAULT_CMDBUF_SIZE};
-
-use crate::render::Target;
+use citro2d_sys::{C2D_BotLeft, C2D_BotRight, C2D_Fini, C2D_Init, C2D_Prepare, C2D_TintLuma, C2D_TintMult, C2D_TintSolid, C2D_TopLeft, C2D_TopRight, C3D_Fini, C3D_Init, C2D_DEFAULT_MAX_OBJECTS, C3D_DEFAULT_CMDBUF_SIZE};
 
 #[doc(alias = "C2D_TintMode")]
 #[repr(u8)]
