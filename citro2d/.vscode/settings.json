@@ -9,8 +9,7 @@
     "rust-analyzer.server.extraEnv": {
       "DEVKITPRO": "/opt/devkitpro",
       "DEVKITARM": "/opt/devkitpro/devkitARM",
-      "PATH": "/opt/devkitpro/devkitARM/bin:/opt/devkitpro/tools/bin:/usr/local/bin:/usr/local/sbin:/usr/sbin:/usr/bin:/sbin:/bin",
-      "RUSTUP_TOOLCHAIN": "nightly-2025-09-20"
+      "PATH": "/opt/devkitpro/devkitARM/bin:/opt/devkitpro/tools/bin:/usr/local/bin:/usr/local/sbin:/usr/sbin:/usr/bin:/sbin:/bin"
     }
 }
 
