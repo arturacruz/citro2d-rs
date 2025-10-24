@@ -4,7 +4,7 @@ use crate::base::Citro2D;
 
 #[doc(alias = "C3D_RenderTarget")]
 pub struct Target {
-    inner: Box<C3D_RenderTarget>
+    pub inner: Box<C3D_RenderTarget>
 }
 
 pub enum TargetError {
@@ -16,6 +16,7 @@ pub enum Screen {
 }
 
 impl Citro2D {
+    #[doc(alias = "C2D_CreateScreenTarget")]
     pub fn create_target(&self, screen: Screen) -> Result<Target, TargetError> {
         let (screen, side) = match screen {
             Screen::TopLeft => (0, 0),
@@ -30,10 +31,5 @@ impl Citro2D {
         }
         let inner = unsafe { Box::from_raw(ptr) };
         Ok(Target { inner })
-    }
-
-    #[doc(alias = "C2D_SceneTarget")]
-    pub fn set_scene_target(&self, target: &mut Target) {
-        unsafe { C2D_SceneTarget(&mut *target.inner);}
     }
 }

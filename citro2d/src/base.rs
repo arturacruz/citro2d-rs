@@ -30,7 +30,11 @@ pub enum Citro2DError {
     Init3D, Init2D, AlreadyInitialized
 }
 
-pub struct Citro2D;
+/// Main Citro2D controller.
+pub struct Citro2D {
+    /// Controls the creation of new instances of Frame.
+    pub drawing: bool,
+}
 
 impl Citro2D {
     #[doc(alias = "C2D_Init")]
@@ -54,17 +58,7 @@ impl Citro2D {
             C2D_Prepare();
         }
 
-        Ok(Self)
-    }
-
-    #[doc(alias = "C2D_Flush")]
-    pub fn flush(&self) {
-        unsafe { C2D_Flush(); };
-    }
-
-    #[doc(alias = "C2D_SceneSize")]
-    pub fn set_scene_size(&self, width: u32, height: u32, tilt: bool) {
-        unsafe { C2D_SceneSize(width, height, tilt); };
+        Ok(Self { drawing: false })
     }
 }
 
