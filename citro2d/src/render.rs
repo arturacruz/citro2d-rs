@@ -1,9 +1,10 @@
-use std::ptr::NonNull;
+use citro2d_sys::{C2D_CreateScreenTarget, C2D_SceneTarget, C3D_RenderTarget};
 
-use citro2d_sys::{C2D_CreateScreenTarget, C3D_RenderTarget};
+use crate::base::Citro2D;
 
+#[doc(alias = "C3D_RenderTarget")]
 pub struct Target {
-    ptr: NonNull<C3D_RenderTarget>
+    inner: Box<C3D_RenderTarget>
 }
 
 pub enum TargetError {
@@ -14,20 +15,25 @@ pub enum Screen {
     TopLeft, TopRight, Bottom
 }
 
-
-impl Target {
-    pub fn new(screen: Screen) -> Result<Target, TargetError> {
+impl Citro2D {
+    pub fn create_target(&self, screen: Screen) -> Result<Target, TargetError> {
         let (screen, side) = match screen {
             Screen::TopLeft => (0, 0),
             Screen::TopRight => (0, 1),
             Screen::Bottom => (1, 0)  
         };
     
-        let ptr = match NonNull::new(unsafe { C2D_CreateScreenTarget(screen, side) }) {
-            Some(p) => p,
-            None => return Err(TargetError::Init2D)
-        };
+        let ptr = unsafe { C2D_CreateScreenTarget(screen, side) };
 
-        Ok(Target { ptr })
+        if ptr.is_null() {
+            return Err(TargetError::Init2D)
+        }
+        let inner = unsafe { Box::from_raw(ptr) };
+        Ok(Target { inner })
+    }
+
+    #[doc(alias = "C2D_SceneTarget")]
+    pub fn set_scene_target(&self, target: &mut Target) {
+        unsafe { C2D_SceneTarget(&mut *target.inner);}
     }
 }
