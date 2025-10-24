@@ -1,3 +1,4 @@
+pub mod color;
 pub mod frame;
 pub mod image;
 pub mod base;
