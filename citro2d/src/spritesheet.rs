@@ -4,29 +4,34 @@ use citro2d_sys::{C2D_SpriteSheet, C2D_SpriteSheetCount, C2D_SpriteSheetFree, C2
 
 use crate::{image::Image, sprite::Sprite};
 
+#[derive(Debug)]
 pub enum SpritesheetError {
-    Load
+    Load, NullPtr
 }
 
 pub struct Spritesheet {
-    inner: C2D_SpriteSheet
+    pub(super) inner: C2D_SpriteSheet
 }
 
 impl Spritesheet {
+    #[doc(alias = "C2D_SpriteSheetLoad")]
+    /// Expects a ROMFS to be initialized
     pub fn new(filename: &str) -> Result<Self, SpritesheetError> {
         let path = match CString::from_str(filename) {
-            Ok(p) => p.as_ptr(),
+            Ok(p) => p,
             Err(_) => return Err(SpritesheetError::Load),
         };
-        let inner = unsafe { C2D_SpriteSheetLoad(path) };
+
+        let inner = unsafe { C2D_SpriteSheetLoad(path.as_ptr()) };
 
         if inner.is_null() {
-            return Err(SpritesheetError::Load);
+            return Err(SpritesheetError::NullPtr);
         }
 
         Ok(Spritesheet { inner })
     }
 
+    #[doc(alias = "C2D_SpriteSheetGetImage")]
     pub fn get_image(&self, index: usize) -> Option<Image> {
         if index > self.size() {
             return None;
@@ -45,6 +50,7 @@ impl Spritesheet {
         Some(img.into())
     }
 
+    #[doc(alias = "C2D_SpriteSheetCount")]
     pub fn size(&self) -> usize {
         unsafe { C2D_SpriteSheetCount(self.inner) }
     }

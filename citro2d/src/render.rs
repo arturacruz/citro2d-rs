@@ -4,9 +4,10 @@ use crate::{base::Citro2D};
 
 #[doc(alias = "C3D_RenderTarget")]
 pub struct Target {
-    pub inner: Box<C3D_RenderTarget>
+    pub(super) inner: Box<C3D_RenderTarget>
 }
 
+#[derive(Debug)]
 pub enum TargetError {
     Init2D,
 }

@@ -1,4 +1,8 @@
+use std::sync::Mutex;
+
 use citro2d_sys::{C2D_BotLeft, C2D_BotRight, C2D_Fini, C2D_Init, C2D_Prepare, C2D_TintLuma, C2D_TintMult, C2D_TintSolid, C2D_TopLeft, C2D_TopRight, C3D_Fini, C3D_Init, C2D_DEFAULT_MAX_OBJECTS, C3D_DEFAULT_CMDBUF_SIZE};
+
+static ACTIVE_CITRO: Mutex<bool> = Mutex::new(false);
 
 #[doc(alias = "C2D_TintMode")]
 #[repr(u8)]
@@ -24,15 +28,14 @@ pub enum Corner {
     BotRight = C2D_BotRight
 }
 
+#[derive(Debug)]
 pub enum Citro2DError {
     Init3D, Init2D, AlreadyInitialized
 }
 
 /// Main Citro2D controller.
-pub struct Citro2D {
-    /// Controls the creation of new instances of Frame.
-    pub drawing: bool,
-}
+#[derive(Debug)]
+pub struct Citro2D;
 
 impl Citro2D {
     #[doc(alias = "C2D_Init")]
@@ -45,7 +48,15 @@ impl Citro2D {
         Self::init(buffer_size, max_objs)
     }
 
+    #[doc(alias = "C2D_Init")]
     fn init(buffer_size: u32, max_objs: u16) -> Result<Self, Citro2DError> {
+        let mut active = ACTIVE_CITRO
+            .lock()
+            .expect("[Citro2D] Failed to get current state of Citro.");
+        
+        if *active {
+            return Err(Citro2DError::AlreadyInitialized);
+        }
         if !unsafe { C3D_Init(buffer_size as usize) } { 
             return Err(Citro2DError::Init3D);
         }
@@ -56,7 +67,8 @@ impl Citro2D {
             C2D_Prepare();
         }
 
-        Ok(Self { drawing: false })
+        *active = true;
+        Ok(Self {})
     }
 }
 
@@ -67,6 +79,9 @@ impl Drop for Citro2D {
             C2D_Fini();
             C3D_Fini();
         }
+        *ACTIVE_CITRO
+            .lock()
+            .expect("[Citro2D] Failed to get current state of Citro.") = false;
     }
 }
 

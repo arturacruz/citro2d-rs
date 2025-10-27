@@ -5,3 +5,4 @@ edition = "2024"
 
 [dependencies]
 citro2d-sys = { version = "0.1.0", path = "../citro2d-sys" }
+ctru-rs = { git = "https://github.com/rust3ds/ctru-rs" }

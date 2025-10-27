@@ -1,5 +1,6 @@
 use citro2d_sys::{C2D_Color32, C2D_Color32f};
 
+#[derive(Debug)]
 pub struct Color<T> {
     pub r: T,
     pub g: T,
