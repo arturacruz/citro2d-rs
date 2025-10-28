@@ -1,5 +1,6 @@
-use std::{error::Error, ffi::NulError, fmt::Display};
+#![feature(new_zeroed_alloc)]
 
+use std::{error::Error, ffi::NulError, fmt::Display};
 pub mod font;
 pub mod text;
 pub mod color;

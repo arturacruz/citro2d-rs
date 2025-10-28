@@ -11,6 +11,8 @@ impl From<Image> for Sprite {
     fn from(image: Image) -> Self {
         let mut inner = Box::<C2D_Sprite>::new_uninit();
         unsafe { C2D_SpriteFromImage(inner.as_mut_ptr(), image.inner()); };
+        
+        
 
         Sprite { inner: unsafe { inner.assume_init() } }
     }

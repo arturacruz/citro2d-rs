@@ -7,7 +7,7 @@ use crate::{base::Citro2D, render::Target};
 pub mod scene;
 
 /// Mutable singleton to enforce only one instance of Frame at a time.
-static ACTIVE_FRAME: Mutex<bool> = Mutex::new(false);
+pub static ACTIVE_FRAME: Mutex<bool> = Mutex::new(false);
 
 #[derive(Debug)]
 pub struct Frame;
