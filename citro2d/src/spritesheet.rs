@@ -1,7 +1,9 @@
+use std::error::Error;
 use std::{ffi::CString, str::FromStr};
 
 use citro2d_sys::{C2D_SpriteSheet, C2D_SpriteSheetCount, C2D_SpriteSheetFree, C2D_SpriteSheetGetImage, C2D_SpriteSheetLoad};
 
+use crate::Citro2DError;
 use crate::{image::Image, sprite::Sprite};
 
 #[derive(Debug)]
@@ -16,16 +18,12 @@ pub struct Spritesheet {
 impl Spritesheet {
     #[doc(alias = "C2D_SpriteSheetLoad")]
     /// Expects a ROMFS to be initialized
-    pub fn new(filename: &str) -> Result<Self, SpritesheetError> {
-        let path = match CString::from_str(filename) {
-            Ok(p) => p,
-            Err(_) => return Err(SpritesheetError::Load),
-        };
-
+    pub fn new(filename: &str) -> Result<Self, impl Error> {
+        let path = CString::from_str(filename)?;
         let inner = unsafe { C2D_SpriteSheetLoad(path.as_ptr()) };
 
         if inner.is_null() {
-            return Err(SpritesheetError::NullPtr);
+            return Err(Citro2DError::FileNotFound);
         }
 
         Ok(Spritesheet { inner })
