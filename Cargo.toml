@@ -7,4 +7,4 @@ default-members = [
     "citro2d",
     "citro2d-sys",
 ]
-resolver = "2"
+resolver = "3"
