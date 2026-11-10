@@ -72,4 +72,11 @@ impl Sprite {
     pub fn mov(&mut self, x: f32, y: f32) {
         unsafe { C2D_SpriteMove(&mut *self.inner, x, y); };
     }
+
+    pub fn size(&self) -> (f32, f32) {
+        (
+            self.inner.params.pos.w.abs(),
+            self.inner.params.pos.h.abs(),
+        )
+    }
 }
