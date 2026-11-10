@@ -1,6 +1,6 @@
-use citro2d_sys::{C2D_CreateScreenTarget, C3D_RenderTarget};
+use citro2d_sys::{C2D_CreateScreenTarget, C2D_TargetClear, C3D_RenderTarget};
 
-use crate::{base::Citro2D};
+use crate::{base::Citro2D, color::Color};
 
 #[doc(alias = "C3D_RenderTarget")]
 pub struct Target {
@@ -14,6 +14,12 @@ pub enum TargetError {
 
 pub enum Screen { 
     TopLeft, TopRight, Bottom
+}
+
+impl Target {
+    pub fn clear(&mut self, color: Color<u8>) {
+        unsafe { C2D_TargetClear(&mut *self.inner, color.into()); }
+    }
 }
 
 impl Citro2D {

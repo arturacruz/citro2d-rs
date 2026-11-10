@@ -1,8 +1,9 @@
-use citro2d_sys::{C2D_DrawSprite, C2D_Sprite, C2D_SpriteFromImage, C2D_SpriteMove, C2D_SpriteRotate, C2D_SpriteRotateDegrees, C2D_SpriteScale, C2D_SpriteSetCenter, C2D_SpriteSetCenterRaw, C2D_SpriteSetDepth, C2D_SpriteSetPos, C2D_SpriteSetRotation, C2D_SpriteSetRotationDegrees, C2D_SpriteSetScale};
+use citro2d_sys::{C2D_Sprite, C2D_SpriteFromImage, C2D_SpriteMove, C2D_SpriteRotate, C2D_SpriteRotateDegrees, C2D_SpriteScale, C2D_SpriteSetCenter, C2D_SpriteSetCenterRaw, C2D_SpriteSetDepth, C2D_SpriteSetPos, C2D_SpriteSetRotation, C2D_SpriteSetRotationDegrees, C2D_SpriteSetScale};
 
 use crate::image::Image;
 
 #[doc(alias = "C2D_Sprite")]
+#[derive(Clone, Debug)]
 pub struct Sprite {
     pub(super) inner: Box<C2D_Sprite>
 }
@@ -11,8 +12,6 @@ impl From<Image> for Sprite {
     fn from(image: Image) -> Self {
         let mut inner = Box::<C2D_Sprite>::new_uninit();
         unsafe { C2D_SpriteFromImage(inner.as_mut_ptr(), image.inner()); };
-        
-        
 
         Sprite { inner: unsafe { inner.assume_init() } }
     }

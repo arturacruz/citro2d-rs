@@ -1,7 +1,7 @@
 use std::{ptr};
 use std::{ffi::CString, str::FromStr};
 
-use citro2d_sys::{C2D_AlignCenter, C2D_AlignJustified, C2D_AlignLeft, C2D_AlignRight, C2D_AtBaseline, C2D_Font_s, C2D_Text, C2D_TextBuf, C2D_TextBufClear, C2D_TextBufDelete, C2D_TextBufNew, C2D_TextBufResize, C2D_TextFontParse, C2D_TextGetDimensions, C2D_TextOptimize, C2D_WithColor, C2D_WordWrap};
+use citro2d_sys::{C2D_AlignCenter, C2D_AlignJustified, C2D_AlignLeft, C2D_AlignRight, C2D_AtBaseline, C2D_Text, C2D_TextBuf, C2D_TextBufClear, C2D_TextBufDelete, C2D_TextBufNew, C2D_TextBufResize, C2D_TextFontParse, C2D_TextGetDimensions, C2D_TextOptimize, C2D_WithColor, C2D_WordWrap};
 
 use crate::font::Font;
 use crate::Citro2DError as CErr;
@@ -27,8 +27,10 @@ pub enum TextFlags {
 
 pub struct Text {
     pub(crate) inner: Box<C2D_Text>,
-    scale: (f32, f32),
-    flags: u32
+    pub(crate) scale: (f32, f32),
+    pub(crate) pos: (f32, f32, f32),
+    pub(crate) flags: u32,
+    buffer: TextBuffer
 }
 
 fn handle_parse_result(c: *const ::libc::c_char) -> Result<(), CErr> {
@@ -49,29 +51,38 @@ impl Text {
     pub fn new(text: &str, font: Option<&Font>) -> Result<Self, CErr> {
 
         let inner = Box::<C2D_Text>::new_zeroed();
+        let buffer = TextBuffer::new(
+            text.chars().count().max(1)
+        );
 
         let mut txt = Text { 
             inner: unsafe { inner.assume_init() },
             scale: (1.0, 1.0),
-            flags: 0
+            pos: (0.0, 0.0, 0.0),
+            flags: 0,
+            buffer
         };
 
-        txt.add_text(text, font)?;
+        txt.set_text(text, font)?;
 
         Ok(txt)
     }
 
-    pub fn add_text(&mut self, text: &str, font: Option<&Font>) -> Result<(), CErr> {
+    pub fn set_text(&mut self, text: &str, font: Option<&Font>) -> Result<(), CErr> {
+        self.buffer.clear();
         let cstr = CString::from_str(text)?;
-        let buf = TextBuffer::new(1024);
 
-        let fontptr: *mut C2D_Font_s = match font {
-            None => ptr::null_mut(),
-            Some(i) => i.inner
+        let fontptr = font.map_or(ptr::null_mut(), |f| f.inner); 
+        let result = unsafe { 
+            C2D_TextFontParse(
+                &mut *self.inner, 
+                fontptr,
+                self.buffer.inner,
+                cstr.as_ptr()
+            ) 
         };
-        let result = unsafe { C2D_TextFontParse(&mut *self.inner, &mut *fontptr, buf.inner, cstr.as_ptr()) };
-        let _ = handle_parse_result(result)?;
-        Ok(())
+
+        handle_parse_result(result)
     }
 
     pub fn dimensions(&self) -> (f32, f32) {
@@ -82,7 +93,22 @@ impl Text {
         (width, height)
     }
 
-    pub(crate) fn optimize(&self) {
+    pub fn set_position(&mut self, x: f32, y: f32, z: f32) {
+        self.pos = (x, y, z);
+    }
+
+    pub fn set_scale(&mut self, x: f32, y: f32) {
+        self.scale = (x, y);
+    }
+
+    pub fn set_flags(&mut self, flags: Vec<TextFlags>) {
+        self.flags = 0;
+        for flag in flags {
+            self.flags |= flag as u32;
+        }
+    }
+
+    pub fn optimize(&self) {
         unsafe { C2D_TextOptimize(&*self.inner); };
     }
 }
